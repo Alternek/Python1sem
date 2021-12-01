@@ -121,6 +121,16 @@ absolute_error_boole1 = abs(integral_true - I4)
 relative_error_riemann1 = absolute_error_riemann1 / abs(I2) if I2 != 0 else 0
 relative_error_boole1 = absolute_error_boole1 / abs(I4) if I4 != 0 else 0
 
+print('Абсолютная ошибка метода прямоугольников:'
+      ' {:.4g} для n1 и {:.4g} для n2'.format(absolute_error_riemann, absolute_error_riemann1))
+print('Абсолютная ошибка метода Буля:'
+      ' {:.4g} для n1 и {:.4g} для n2'.format(absolute_error_boole, absolute_error_boole1))
+
+print('Относительная ошибка метода прямоугольников:'
+      ' {:.4g} для n1 и {:.4g} для n2'.format(relative_error_riemann, relative_error_riemann1))
+print('Относительная ошибка метода Буля:'
+      ' {:.4g} для n1 и {:.4g} для n2'.format(relative_error_boole, relative_error_boole1))
+
 if absolute_error_riemann <= absolute_error_boole and absolute_error_riemann1 <= absolute_error_boole1:
     print('Более точный метод левых прямоугольников')
     ans = n_accuracy_eps(type_f='boole', l_limit=start, r_limit=end, epsilon=eps, max_iter=n_iters)
@@ -133,4 +143,4 @@ else:
 if ans == -1:
     print('За {} итераций нужная точность {:.4g} не достигнута'.format(n_iters, eps))
 else:
-    print('Для {} будет достигнута точность {:.4g}'.format(ans, eps))
+    print('При n = {} будет достигнута точность {:.4g}'.format(ans, eps))

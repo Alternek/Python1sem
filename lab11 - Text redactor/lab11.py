@@ -31,6 +31,22 @@ def create_menu() -> int:
         return create_menu()
 
 
+def clear_void_str(text: list[str]) -> list[str]:
+    """
+    Удаляет пустые строки
+    :param text: текст
+    :return: "чистый" текст
+    """
+    dlt = []
+    for line in range(len(text)):
+        if not text[line].strip():
+            dlt.append(line)
+    dlt.reverse()
+    for ind in dlt:
+        text.pop(ind)
+    return text
+
+
 def max_len_line(text: list[str]) -> int:
     """
     Находит максимальную длину строки
@@ -68,8 +84,7 @@ def left_align(text: list[str]) -> list[str]:
     :return: выравненный текст
     """
     text = clean_string(text)
-    mx = max_len_line(text)
-    text = list(map(lambda x: x.ljust(mx, ' '), text))
+    text = list(map(lambda x: x.strip(), text))
     return text
 
 
@@ -95,6 +110,8 @@ def justified_align(text: list[str]) -> list[str]:
     mx = max_len_line(text)
     for line in range(len(text)):
         spc_cnt = text[line].count(' ')
+        if spc_cnt == 0:
+            spc_cnt = 1
         delta = mx - len(text[line])
         text[line] = text[line].replace(' ', ' '*(delta // spc_cnt + 1))
         text[line] = text[line].replace(' '*(delta // spc_cnt + 1), ' '*(delta // spc_cnt + 2), delta % spc_cnt)
@@ -109,10 +126,10 @@ def delete_word(text: list[str], word: str) -> list[str]:
     :return: итоговый текст
     """
     for line in range(len(text)):
-        text[line] = ' ' + text[line]
+        text[line] = ' ' + text[line] + ' '
         for repl_s in ' .,!;:':
             text[line] = text[line].replace(' ' + word + repl_s, repl_s)
-        text[line] = text[line][1:]
+        text[line] = text[line][1:-1]
     return text
 
 
@@ -125,10 +142,10 @@ def replace_word(text: list[str], word_orig: str, word_final: str) -> list[str]:
     :return: итоговый текст
     """
     for line in range(len(text)):
-        text[line] = ' ' + text[line]
+        text[line] = ' ' + text[line] + ' '
         for repl_s in ' .,!;:':
             text[line] = text[line].replace(' ' + word_orig + repl_s, ' ' + word_final + repl_s)
-        text[line] = text[line][1:]
+        text[line] = text[line][1:-1]
     return text
 
 
@@ -288,20 +305,20 @@ text_original = """Но и это не    показалось Алисе 2 - 0 
    в тот миг все казалось ей
 вполне естественным; 1 - 2 + 22 33 + 1) Когда Кролик ввввввдруг вынул часы из жилетного кармана и,
 взглянув на них, помчался дальше, Алиса вскочила на ноги. Ее тут осенило: ведь
-никогда раньше она не видела кролика с часами, да еще с
+никогда      раньше она не видела кролика с часами, да еще с
 жилетным карманом в придачу! Сгорая от любопытства, она побежала
 за ним по полю и только-только успела заметить, что он юркнул в нору под изгородью. В
 тот же миг Алиса юркнула   (примечание: 1+31 + 5 - 2-1)  за ним следом, не думая  о том, как же она
-будет выбираться обратно. Нора сначала шла прямо, ровная, как туннель, а потом
+будет      выбираться обратно. Нора сначала шла прямо, ровная, как туннель,   а потом
 вдруг круто обрывалась вниз. Не успела Алиса33 32 32 - 1 и глазом моргнуть, как она
 начала падать, словно в глубокий колодец.
 
-Короткая строка,
-Строка чуть длиннее,
-Строка еще чуть длиннее,
+Строка
+Строкаааааааа
+Строкааааааааааааааа
 
 
-Строка с числами: ----2+25, 2-2, 25 +3+4 +5, 2-23, 2-+2, asf131kna, gi2 + 3 -4fgaig1ga+akfh1+2,""".split('\n')
+Строка с выражениями: ----2+25, 2-2, 25 +3+4 +5, 2-23, 2-+2, asf131kna, gi2 + 3 -4fgaig1ga+akfh1+2,""".split('\n')
 
 # Основной цикл
 while True:
@@ -341,5 +358,5 @@ while True:
         # Найти предложение, содержащее слово с максимальным количеством согласных букв
         print('Найденное предложение: ' + find_sentence(text_original))
     print()
-    text_original = clean_string(text_original)
+    text_original = clear_void_str(text_original)
     print_text(text_original)

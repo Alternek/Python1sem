@@ -16,14 +16,11 @@ def float_proof(s):
     :param s: str: строка на проверку
     :return: bool: является ли строка float
     """
-    s = s.lstrip('-')
-    if s.find('e.') + 1 or s.find('.e') + 1 or s[0] == 'e' or s[-1] == 'e':
+    try:
+        float(s)
+        return True
+    except TypeError:
         return False
-    s = s.replace('.', '', 1)
-    s = s.replace('e-', '', 1)
-    s = s.replace('e+', '', 1)
-    s = s.replace('e', '', 1)
-    return s.isdecimal()
 
 
 def input_proof(inpt: str, left_limit=-inf, right_limit=+inf, amount_of_numbers=1, type_proof='float'):

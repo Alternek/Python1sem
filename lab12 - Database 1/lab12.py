@@ -107,9 +107,9 @@ def print_db() -> None:
                 if obj_type == 'str':
                     print('{:^25}'.format(obj), end=' ')
                 elif obj_type == 'int':
-                    print('{:^25.4g}'.format(int(obj)), end=' ')
+                    print('{:^25.5g}'.format(int(obj)), end=' ')
                 else:
-                    print('{:^25.4g}'.format(float(obj)), end=' ')
+                    print('{:^25.5g}'.format(float(obj)), end=' ')
             print()
         print()
 

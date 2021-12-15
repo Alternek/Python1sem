@@ -19,7 +19,7 @@ def float_proof(s):
     try:
         float(s)
         return True
-    except TypeError:
+    except TypeError or ValueError:
         return False
 
 
